@@ -166,8 +166,9 @@ This project is for educational and internal automation purposes. No formal lice
 
 ## Author
 
-**Essias Souza** (Essias Souza)[https://github.com/EssiasSouza]
+**[Essias Souza](https://github.com/EssiasSouza)**
+
 Tech Professional | Python & Automation Specialist
-*Known for teaching keyboard music and working with musical tech*
+*Known for teaching IT and working with musical tech*
 Suzano, São Paulo – Brazil
 
