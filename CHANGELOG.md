@@ -32,4 +32,4 @@ In this change I added some function. See the version 1.0.1.
  
 ### Fixed
  
-- Fixed the log using strip to the result to avoid log with blank lines..
+- Fixed the log using strip on the terminal result to avoid log with blank lines..
