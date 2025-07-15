@@ -1,2 +1,6 @@
-192.168.1.100
-192.168.1.101
+localhost
+localhost
+localhost
+localhost
+localhost
+localhost

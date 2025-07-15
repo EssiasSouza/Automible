@@ -17,6 +17,23 @@ straightforward as possible.
 ### Changed
  
 ### Fixed
+
+---
+ 
+## [1.1.0] - 2025-06-15
+  
+In this change I added some function. See the version 1.1.0
+ 
+### Added
+
+- A function to run sudo commands and put the password using the stdin to make it.
+
+### Changed
+  
+- Fixed the logical changing the stop function to run after the command list.
+- Fixed command list execution that was executing one by one connecting and closing the connection. Now to each machine, the script makes a connection and run the whole list of commands saving it in the log file and closing after all of commands.
+
+---
  
 ## [1.0.1] - 2025-06-15
   

@@ -1,1 +1,2 @@
-ls -l /home/user | wc -l
+ls -l /home/user*
+sudo cat /etc/hosts | grep zpolling.com.br

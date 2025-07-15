@@ -40,37 +40,74 @@ def logging(logMessage):
     with open("Essiasble.log", "a", encoding="UTF-8") as resultLog:
         resultLog.write(logMessage)
 
-def execute_ssh_command(hostname, username, password, command):
-    def executing(hostname, username, password, command):
-        try:
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(hostname, username=username, password=password)
+def entering_ssh_and_run_commands(hostname, username, password, commands):
 
-            stdin, stdout, stderr = ssh.exec_command(command)
-            result = stdout.read().decode().strip()
-            error = stderr.read().decode().strip()
+    def run_sudo_command(command):
+        stdin, stdout, stderr = ssh.exec_command(f"sudo -S {command}")
+        stdin.write(password + '\n')
+        stdin.flush()
+        stdout.channel.recv_exit_status()
+        out = stdout.read().decode().strip()
+        err = stderr.read().decode().strip()
 
-            ssh.close()
+        print(out)
 
-            if error:
-                print(f"Execução com erro em {hostname}: {error} : {result}")
-                logging(f"{hostname}; Erro ao executar comando em: {error}\n")
+        return out, err
+    
+    def run_command(command):
+        stdin, stdout, stderr = ssh.exec_command(command)
+        out = stdout.read().decode().strip()
+        err = stderr.read().decode().strip()
+
+        print(out)
+
+        return out, err
+
+    try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname, username=username, password=password)
+
+        for command in commands:
+            print(f"Executando '{command}' em {machine['hostname']}...")
+            username = machine['username']
+            password = machine['password']
+
+            def result_std(stdout, stderr):
+                result = stdout
+                error = stderr
+
+                IGNORED_ERRORS = ["[sudo] password", "[sudo] senha", "[sudo] senha para", "[sudo] password for"]
+                
+                def is_real_error(stderr):
+                    if not stderr.strip():
+                        return False
+                    for ign in IGNORED_ERRORS:
+                        if ign.lower() in stderr.lower():
+                            return False
+                    return True
+
+                if is_real_error(error):
+                    print(f"Execução com erro em {hostname}: {error} : {result}")
+                    logging(f"{hostname}; Erro ao executar comando em: {error}\n")
+                else:
+                    print(f"Resultado do comando em {hostname}: {result}")
+                    logging(f"{hostname}; {result}\n")
+
+            if command.startswith('sudo'):
+                # commandS = f"echo {password} | sudo -S {command[5:]}"
+                stdout, stderr = run_sudo_command(command[5:])
+                result_std(stdout, stderr)
             else:
-                print(f"Comando resultado em {hostname}: {result}")
-                logging(f"{hostname}; {result}\n")
+                stdout, stderr = run_command(command)
+                result_std(stdout, stderr)
 
-        except Exception as e:
-            print(f"Erro ao conectar em {hostname}: {str(e)}")
-            logging(f"Erro ao conectar em {hostname}: {str(e)}\n")
+        ssh.close()
 
-            pass
-            
-    if command.startswith('sudo'):
-        commandS = f"echo {password} | sudo -S {command[5:]}"
-        executing(hostname, username, password, commandS)
-    else:
-        executing(hostname, username, password, command)
+    except Exception as e:
+        print(f"Erro ao conectar em {hostname}: {str(e)}")
+        logging(f"Erro ao conectar em {hostname}: {str(e)}\n")
+        pass
 
 def ping_ip(ip_address):
     try:
@@ -119,21 +156,12 @@ for machine in machines:
     ping_result = ping_ip(ip_address)
 
     if ping_result == "OK":
+        entering_ssh_and_run_commands(ip, username, password, commands)
         if continuous == "y" or continuous == "yes" or continuous == "s":
             input("NEXT >> ? (ENTER)")
-        for command in commands:
-            print(f"Executando '{command}' em {machine['hostname']}...")
-            username = machine['username']
-            password = machine['password']
-            ip = machine['hostname']
-
-            file_path = r"\Your\path\file.txt"
-            destination_path = "/home/pi/EDI/"
-            # send_file_via_scp(file_path, destination_path, ip, username, password)
-            
-            execute_ssh_command(ip, username, password, command)
     else:
         logging(f"{ip_address}; Sem resposta no PING\n")
-
+        if continuous == "y" or continuous == "yes" or continuous == "s":
+            input("NEXT >> ? (ENTER)")
         pass
     
