@@ -13,6 +13,7 @@ straightforward as possible.
 ### Added
 
 - Will be added a function to send more than one file and to diferent destination. Example: filex.txt to /home/pi/filex/filex.txt, filey.txt to /home/pi/filey.txt
+- A function to choose a port of connection will be added in this next version.
  
 ### Changed
  
