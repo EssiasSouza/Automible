@@ -37,7 +37,7 @@ else:
 continuous = input("Do you want to STOP to each execution? Type Y or N: ").lower()
 
 def logging(logMessage):
-    with open("Essiasble.log", "a", encoding="UTF-8") as resultLog:
+    with open("Automible.log", "a", encoding="UTF-8") as resultLog:
         resultLog.write(logMessage)
 
 def entering_ssh_and_run_commands(hostname, username, password, commands):
@@ -156,7 +156,8 @@ for machine in machines:
     ping_result = ping_ip(ip_address)
 
     if ping_result == "OK":
-        entering_ssh_and_run_commands(ip, username, password, commands)
+        print("PING OK")
+        entering_ssh_and_run_commands(ip_address, username, password, commands)
         if continuous == "y" or continuous == "yes" or continuous == "s":
             input("NEXT >> ? (ENTER)")
     else:

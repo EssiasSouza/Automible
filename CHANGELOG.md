@@ -13,18 +13,11 @@ straightforward as possible.
 ### Added
 
 - Will be added a function to send more than one file and to diferent destination. Example: filex.txt to /home/pi/filex/filex.txt, filey.txt to /home/pi/filey.txt
-- A function to choose a port of connection will be added in this next version.
  
 ### Changed
  
 ### Fixed
-- Fix the alert message showed when it starts.
-```
-...\venv\Lib\site-packages\paramiko\pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
-  "cipher": algorithms.TripleDES,
-...\venv\Lib\site-packages\paramiko\transport.py:258: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
-  "class": algorithms.TripleDES,
-```
+
 ---
  
 ## [1.1.0] - 2025-06-15
