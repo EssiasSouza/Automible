@@ -1,6 +1,6 @@
-# Essiasble – Remote SSH Command Executor & File Sender
+# Automible – Remote SSH Command Executor & File Sender
 
-Essiasble is a Python-based tool that automates remote command execution and file transfers over SSH/SCP to multiple Linux-based machines. The application uses an inventory file (`Inventory.txt`) to define host machines and their credentials, and it can execute a sequence of shell commands defined in `commands.txt`.
+Automible is a Python-based tool that automates remote command execution and file transfers over SSH/SCP to multiple Linux-based machines. The application uses an inventory file (`Inventory`) to define host machines and their credentials, and it can execute a sequence of shell commands defined in `commands`.
 
 ---
 
@@ -9,7 +9,7 @@ Essiasble is a Python-based tool that automates remote command execution and fil
 * Execute multiple shell commands remotely via SSH
 * Send files to multiple machines using SCP
 * Supports global or per-machine login credentials
-* Logs all actions and outputs to a file (`Essiasble.log`)
+* Logs all actions and outputs to a file (`Automible.log`)
 * Optional manual control between machine executions
 * Automatic platform-based ping check before execution
 
@@ -51,10 +51,10 @@ pip install --no-index --find-links=libs -r requirements.txt
 
 ### File Structure
 
-* `Inventory.txt` – List of target machines with credentials or just IPs
-* `commands.txt` – List of shell commands to execute on each machine
-* `Essiasble.log` – Log output of all command results and errors
-* `Essiasble.py` – Main application script
+* `Inventory` – List of target machines with credentials or just IPs
+* `commands` – List of shell commands to execute on each machine
+* `Automible.log` – Log output of all command results and errors
+* `Automible.py` – Main application script
 
 ---
 
@@ -79,30 +79,49 @@ There are **two options** for defining your inventory:
 
 If you choose the second option, you will be prompted to input a **global username and password** that will be used for all machines.
 
+#### File of list sending files.
+
+If you want to send one file to each machine in your `Inventory` you can write a file named `sending` with the content to send and the remote destination. For example:
+
+```
+file1.txt:/home/user/
+file2.jpg:/var/www/public_html/images/
+```
+
+In this case to each machine will be runned a sending of the files in order your file.
+
+If want to send all of files in your environment you can use the wildcard * or if is a lot of files with the same extension you can use *.XXX (where XXX is the file extension).For example:
+
+```
+*.txt:/home/user/
+*.jpg:/var/www/public_html/images/
+```
+
+You should use the `CRATE` directory to put your files to be sent. Make sure your user has the privilegies to write files in destination folder.
 ---
 
 ### How to Use
 
-1. **Prepare your `Inventory.txt` and `commands.txt` files.**
+1. **Prepare your `Inventory` and `commands` files.**
 
 2. **Run the application:**
 
 ```bash
-python Essiasble.py
+python Automible.py
 ```
 
 3. **Follow the interactive prompts:**
 
-* Enter a global username/password (or leave blank to use credentials from `Inventory.txt`).
+* Enter a global username/password (or leave blank to use credentials from `Inventory`).
 * Choose if you want to pause before processing each machine (`Y/N`).
 
 4. The application will:
 
    * Ping each machine
    * If online, connect via SSH
-   * Execute the commands listed in `commands.txt`
+   * Execute the commands listed in `commands`
    * Optionally send a predefined file (commented in code)
-   * Log all results in `Essiasble.log`
+   * Log all results in `Automible.log`
 
 ---
 
@@ -110,12 +129,12 @@ python Essiasble.py
 
 ### Credentials Handling
 
-* If a global username is provided, each line in `Inventory.txt` is treated as an IP address.
+* If a global username is provided, each line in `Inventory` is treated as an IP address.
 * Otherwise, each line is parsed as a JSON string containing full connection details.
 
 ### Logging
 
-* All results and errors are appended to `Essiasble.log`.
+* All results and errors are appended to `Automible.log`.
 
 ### Command Execution
 

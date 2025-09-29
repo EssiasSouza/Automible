@@ -1,1 +1,6 @@
 venv/
+Automible.log
+CRATE/*
+dist/
+build/
+_pycache_/

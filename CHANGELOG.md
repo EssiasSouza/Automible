@@ -4,18 +4,30 @@ All notable changes to this project will be documented in this file.
  
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
- 
+
 ## [Unreleased] - 2025-06-25
  
 Here we write upgrading notes for brands. It's a team effort to make them as
 straightforward as possible.
  
 ### Added
-
-- Will be added a function to send more than one file and to diferent destination. Example: filex.txt to /home/pi/filex/filex.txt, filey.txt to /home/pi/filey.txt
  
 ### Changed
  
+### Fixed
+ 
+## [1.2.0] - 2025-09-29
+ 
+Was implemented the function to send files using a folder as a CRATE of files and a file to instruct the application over each files to be sended. You can send all files, or use wildcard to send some files.
+ 
+### Added
+
+- Was added a function to send more than one file and to diferent destination. Example: filex.txt to /home/pi/filex/filex.txt, filey.txt to /home/pi/filey.txt. Using the `sending` file you can pass instructions to this sending. Put all of your files in the `CRATE` folder.
+ 
+### Changed
+
+- Was changed the function of logging to insert also data time information.
+
 ### Fixed
 
 ---
