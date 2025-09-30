@@ -135,7 +135,7 @@ def entering_ssh_and_run_commands(hostname, username, password, commands, sendin
 
                 if is_real_error(error):
                     print(f"Running with error in {hostname}: {error} : {result}")
-                    logging(f"{hostname}; Erro while running command in: {error}\n")
+                    logging(f"{hostname};{error}\n")
                 else:
                     print(f"Command result in {hostname}: {result}")
                     logging(f"{hostname}; {result}\n")
@@ -151,8 +151,8 @@ def entering_ssh_and_run_commands(hostname, username, password, commands, sendin
         ssh.close()
 
     except Exception as e:
-        print(f"Erro ao conectar em {hostname}: {str(e)}")
-        logging(f"Erro ao conectar em {hostname}: {str(e)}\n")
+        print(f"Error connecting to {hostname}: {str(e)}")
+        logging(f"Error connecting to {hostname}: {str(e)}\n")
         pass
 
 def ping_ip(ip_address):
@@ -167,7 +167,7 @@ def ping_ip(ip_address):
         else:
             return "NOK"
     except Exception as e:
-        print(f"Erro ao executar ping: {str(e)}")
+        print(f"Error pinging: {str(e)}")
         return "NOK"
 
 with open("sending", "r", encoding="UTF-8") as fileToSend:
