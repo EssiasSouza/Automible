@@ -9,30 +9,30 @@ import fnmatch
 
 machines = []
 print("*** STARTING APPLICATION... ***")
-print("This application uses the file 'Inventory' to get the machines and their credentials.")
-print("The file 'Inventory' should be filled as below if each machine uses different credentials:")
+print("This application uses the file 'Roster.am' to get the machines and their credentials.")
+print("The file 'Roster.am' should be filled as below if each machine uses different credentials:")
 print('Example: {"hostname": "192.168.1.1", "username": "MachineUser", "password": "XYZ@123"},')
 print("Or you can use a list of IP addresses, like this:")
 print(f'192.168.1.1\n192.168.1.10\n192.168.1.2')
 print("If do you want to send files you need to use the file 'seding' with the full path of the files to be sent.")
 print("NOTE: If you want to send all files, use '*' in the first field. You also can combine * with extensions, like '*.txt' or '*.log'")
 print("-" * 50)
-print("If your machines use the same credentials, you can type them below. If not, you can leave them blank and the application will use the credentials from the 'Inventory' file.")
-username = input("Type the USERNAME below and press ENTER or only press press ENTER (If the user name is on Inventory file):\nUsername: ")
+print("If your machines use the same credentials, you can type them below. If not, you can leave them blank and the application will use the credentials from the 'Roster.am' file.")
+username = input("Type the USERNAME below and press ENTER or only press press ENTER (If the user name is on Roster.am file):\nUsername: ")
 
 if not username:
-    print("Username not provided, using the one from 'Inventory' file.")
+    print("Username not provided, using the one from 'Roster.am' file.")
     try:
-        with open("Inventory", "r") as Inventory:
-            for machine in Inventory:
+        with open("Roster.am", "r") as Roster:
+            for machine in Roster:
                 machines.append(json.loads(machine.strip().rstrip(',')))
     except:
-        print("The file Inventory have no credentials\nPlease FIX IT and try again!")
+        print("The file Roster.am have no credentials\nPlease FIX IT and try again!")
         exit()
 else:
     password = getpass.getpass("Password: ")
-    with open("Inventory", "r") as Inventory:
-        for machine in Inventory:
+    with open("Roster.am", "r") as Roster:
+        for machine in Roster:
             ip = machine.strip().rstrip(',')
             machine = '{"hostname": "' + ip + '", "username": "' + username + '", "password": "' + password + '"}'
             machines.append(json.loads(machine.strip().rstrip(',')))
